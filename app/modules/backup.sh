@@ -59,7 +59,7 @@ function pullFromKube {
 
             # Getting list of Kubernetes objects of a specific type 
             objects=$(kubectl get $objectType --namespace=$nameSpace --output custom-columns=NAME:.metadata.name | egrep -v "$EXCLUDE_OBJECTS" | grep -v NAME);
-            [ ! -z "$objects" ] && echo $(logPrefix) - Detected objects of type \'$objectType\' for namespace: \'$nameSpace\' &&
+            [ ! -z "$objects" ] && echo $(logPrefix) - Detected objects of type: \'$objectType\' for namespace: \'$nameSpace\' &&
             while read -r object; do
 
                 # Pulling Kubernetes object to its folder or exit if fail (--export=true stripping it from cluster-specific-information)

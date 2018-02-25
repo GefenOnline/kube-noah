@@ -4,8 +4,8 @@
 BASEDIR=$(dirname "$0")
 INTERVAL="${INTERVAL:-5m}"
 GIT_DIR="${GIT_DIR:-/tmp/certificates}"
-GIT_USER_NAME="${GIT_USER_NAME:-tlser service}"
-GIT_USER_EMAIL="${GIT_USER_EMAIL:-tlser@service.com}"
+GIT_USER_NAME="${GIT_USER_NAME:-kube-noah service}"
+GIT_USER_EMAIL="${GIT_USER_EMAIL:-kube-noah@service.com}"
 ENVIRONMENT=$ENVIRONMENT
 RESTORE=$RESTORE
 BACKUP=$BACKUP
@@ -13,7 +13,7 @@ BACKUP=$BACKUP
 # Fixed Global parameters
 EXCLUDE_NAMESPACES="default|kube-public|weave|kube-system"
 EXCLUDE_OBJECTS="default-token"
-INCLUDE_OBJECT_TYPES="deployments|secrets"
+INCLUDE_OBJECT_TYPES="deployments|secrets|hpa|ingresses"
 
 
 . $BASEDIR/modules/utils.sh
