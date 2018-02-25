@@ -1,0 +1,84 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: tlser 
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - "secrets"
+    verbs:
+      - list
+      - watch
+      - get
+      - update
+      - create
+      - patch
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: tlser
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: tlser
+subjects:
+  - kind: ServiceAccount
+    name: tlser
+    namespace: kube-system
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tlser
+  namespace: kube-system
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: tlser
+  namespace: kube-system
+  labels:
+    app: tlser
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: tlser
+    spec:
+      serviceAccountName: tlser
+      initContainers:
+      - name: tlser-from-git-to-kube
+        image: gefenonline/tlser
+        env:
+        - name: SYNC_TO_KUBE_ONCE
+          value: 'true'
+        - name: GIT_REPO
+          valueFrom:
+            secretKeyRef:
+              name: env-vars
+              key: TLS_CERTIFICATES_REPO_URL
+        - name: ENVIRONMENT
+          valueFrom:
+            secretKeyRef:
+              name: env-vars
+              key: UID
+      containers:
+      - name: tlser-from-kube-to-git
+        image: gefenonline/tlser
+        env:
+        - name: SYNC_TO_GIT_INTERVALLY
+          value: 'true'
+        - name: GIT_REPO
+          valueFrom:
+            secretKeyRef:
+              name: env-vars
+              key: TLS_CERTIFICATES_REPO_URL
+        - name: ENVIRONMENT
+          valueFrom:
+            secretKeyRef:
+              name: env-vars
+              key: UID
