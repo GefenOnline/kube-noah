@@ -6,7 +6,7 @@
 # Push Kubernetes objects to kubernetes cluster
 function pushToKube {
     
-    # Checking if Kubernetes cluster directory doesn't exist, if so exiting gracefully
+    # Checking if Kubernetes cluster directory doesn't exist, if so finish
     if [ ! -d "$GIT_LOCAL_DIR/$KUBE_CLUSTER_NAME" ]; then
 
         #echo $(logPrefix) - No Kubernetes cluster directory by the name $GIT_LOCAL_DIR/$KUBE_CLUSTER_NAME found.

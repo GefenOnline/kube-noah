@@ -14,7 +14,7 @@ function pushToGit {
 
     	echo $(logPrefix) - New changes detected: $statusOutput
     	git --git-dir=$GIT_LOCAL_DIR/.git --work-tree=$GIT_LOCAL_DIR add -A
-    	git --git-dir=$GIT_LOCAL_DIR/.git --work-tree=$GIT_LOCAL_DIR commit -am "Automatic changes by by tlser service"
+    	git --git-dir=$GIT_LOCAL_DIR/.git --work-tree=$GIT_LOCAL_DIR commit -am "Automatic changes by $GIT_USER_NAME"
 
     	# Pulling changes or exit if there is a merge conflict
         echo $(logPrefix) - Pulling changes from the Git repository
@@ -32,8 +32,12 @@ function pushToGit {
 # Exports Kubernetes objects as yaml files to the git folder
 function pullFromKube {
     
-    # Get list of filtered Kubernetes namespaces 
-    nameSpaces=$(kubectl get namespaces --output custom-columns=NAME:.metadata.name | egrep -v "$EXCLUDE_NAMESPACES" | grep -v NAME);
+
+    # Get list of filtered namespaces, exit if fails
+    echo $(logPrefix) - Pulling namespaces from Kubernetes cluster: \'$KUBE_CLUSTER_NAME\'
+    nameSpacesPullCmd="kubectl get namespaces --output custom-columns=NAME:.metadata.name"
+    $nameSpacesPullCmd 1> /dev/null || exit # Only for checking
+    nameSpaces=$($nameSpacesPullCmd | egrep -v "$EXCLUDE_NAMESPACES" | grep -v NAME)
 
     # If namespaces were found, iterate one by one
     [ ! -z "$nameSpaces" ] &&
@@ -54,16 +58,19 @@ function pullFromKube {
 
         # If objcets types were given, iterate one by one.
         [ ! -z "$objectTypes" ] &&
-        echo $(logPrefix) - Starting to backup objects of type: \'$objectTypes\' for namespace: \'$nameSpace\' &&
+        echo $(logPrefix) - Starting to backup objects of types: \'$objectTypes\' of namespace: \'$nameSpace\' &&
         while read -r objectType; do
 
-            # Getting list of Kubernetes objects of a specific type and set their directory variable
-            objects=$(kubectl get $objectType --namespace=$nameSpace --output custom-columns=NAME:.metadata.name | egrep -v "$EXCLUDE_OBJECTS" | grep -v NAME);
+            # Getting list of filtered namespace objects of a specific type and set their directory variable, exit if fail to pull
+            echo $(logPrefix) - Pulling objects of type: \'$objectType\' of namespace: \'$nameSpace\'
+            objectsPullCmd="kubectl get $objectType --namespace=$nameSpace --output custom-columns=NAME:.metadata.name"
+            $objectsPullCmd 1> /dev/null || exit # Only for checking 
+            objects=$($objectsPullCmd | egrep -v "$EXCLUDE_OBJECTS" | grep -v NAME);
             objectTypeDir=$GIT_LOCAL_DIR/$KUBE_CLUSTER_NAME/$nameSpace/$objectType;
 
             # If objcets found, ensure their directory and iterate one by one.
             [ ! -z "$objects" ] &&
-            echo $(logPrefix) - Detected objects of type: \'$objectType\' for namespace: \'$nameSpace\' &&
+            echo $(logPrefix) - Detected objects of type: \'$objectType\' of namespace: \'$nameSpace\' &&
             echo $(logPrefix) - Ensuring folder $objectTypeDir for objects of type: \'$objectType\' &&
             mkdir -p $objectTypeDir &&
             while read -r object; do
@@ -72,11 +79,11 @@ function pullFromKube {
                 echo $(logPrefix) - Pulling object: \'$object\' of type: \'$objectType\' to file: $objectTypeDir/$object.yml
                 kubectl get $objectType $object --namespace=$nameSpace --export=true --output=yaml > $objectTypeDir/$object.yml || exit
 
-            done <<< "${objects}" || echo $(logPrefix) - No objects of type \'$objectType\' detected for namespace: \'$nameSpace\'
+            done <<< "${objects}" || echo $(logPrefix) - No objects of type: \'$objectType\' of namespace: \'$nameSpace\' detected
 
         done <<< "${objectTypes}" || echo $(logPrefix) - No desired object types were specified
 
-    done <<< "${nameSpaces}" || echo $(logPrefix) - No namespaces detected for backup, exiting gracefully
+    done <<< "${nameSpaces}" || echo $(logPrefix) - No namespaces detected for backup
 }
 
 # Main
