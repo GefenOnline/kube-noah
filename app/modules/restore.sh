@@ -9,7 +9,8 @@ function pushToKube {
     # Checking if Kubernetes cluster directory doesn't exist, if so exiting gracefully
     if [ ! -d "$GIT_LOCAL_DIR/$KUBE_CLUSTER_NAME" ]; then
 
-        echo $(logPrefix) - No Kubernetes cluster directory by the name $GIT_DIR/$KUBE_CLUSTER_NAME found.
+        #echo $(logPrefix) - No Kubernetes cluster directory by the name $GIT_LOCAL_DIR/$KUBE_CLUSTER_NAME found.
+        echo $(logPrefix) - No Kubernetes cluster directory by the name $GIT_LOCAL_DIR/$KUBE_CLUSTER_NAME found.
         echo $(logPrefix) - Nothing to do...
 
     else
