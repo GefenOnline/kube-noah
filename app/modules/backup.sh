@@ -30,7 +30,7 @@ function pushToGit {
 
 }
 
-# Exports Kubernetes TLS certificates secrets as yaml files to the git folder
+# Exports Kubernetes objects as yaml files to the git folder
 function pullFromKube {
     
     # Get list of filtered Kubernetes namespaces 
@@ -42,13 +42,13 @@ function pullFromKube {
     while read -r nameSpace; do
 
         # Creating folder for the namespace if absent
-        nameSpaceDir=$GIT_DIR/$ENVIRONMENT/$nameSpace
+        nameSpaceDir=$GIT_DIR/$KUBE_CLUSTER_NAME/$nameSpace
         echo $(logPrefix) - Ensuring folder: $nameSpaceDir for namespace: \'$nameSpace\'
         mkdir -p $nameSpaceDir
 
         # Pulling the namespace to its folder
         echo $(logPrefix) - Pulling namespace: \'$nameSpace\' to file: $nameSpaceDir/$nameSpace.yml
-        kubectl get namespace bla --export=true --output=yaml > $nameSpaceDir/$nameSpace.yml || exit
+        kubectl get namespace $nameSpace --export=true --output=yaml > $nameSpaceDir/$nameSpace.yml || exit
 
         # Getting list of Kubernetes object types (parsing a given fixed global parameter)
         objectTypes=$(echo -e `echo $INCLUDE_OBJECT_TYPES | sed 's/|/\\\n/g'`);
@@ -60,7 +60,7 @@ function pullFromKube {
 
             # Getting list of Kubernetes objects of a specific type and set their directory variable
             objects=$(kubectl get $objectType --namespace=$nameSpace --output custom-columns=NAME:.metadata.name | egrep -v "$EXCLUDE_OBJECTS" | grep -v NAME);
-            objectTypeDir=$GIT_DIR/$ENVIRONMENT/$nameSpace/$objectType;
+            objectTypeDir=$GIT_DIR/$KUBE_CLUSTER_NAME/$nameSpace/$objectType;
 
             # If objcets found, ensure their directory and iterate one by one.
             [ ! -z "$objects" ] &&

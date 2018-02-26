@@ -11,17 +11,17 @@ The kube-noah is designed to backup and restore Kubernetes cluster objects: Depl
 - Trigger the processes separately.
 - Trigger 'Restore objects from Git to Kubernetes' in a job container (once), in cluster startup, and wait for its exit code, before moving forward, if you have resources that are better to be restored then regenerated, like Lets Encrypt TLS certificates for example, that when are loaded as Kubernetes secrets, used instead of requesting new ones from Let't Encrypt and wasting quota.
 - Trigger 'Backup objects from Kubernetes to Git' in a cronjob container (infinitely).
-- Use private repository for the backend storage, if you do, needless to say that the ```GIT_REPO``` url should contain user and password/token.
+- Use private repository for the backend storage, if you do, needless to say that the ```GIT_REPO_URL``` url should contain user and password/token.
 
 ---
 ### Environment Variables
-environment var           | default           |  possible values    | Description
+Key                       | Default value     |  Possible values    | Description
 ------------------------- | ----------------- | ------------------- | ----------------
-GIT_REPO                  | ---               | Any https Git url   | The repository in which the objects are stored, backed up to and taken from, only https url is supported for various reasons.
+GIT_REPO_URL              | ---               | Any https Git url   | The repository in which the objects are stored, backed up to and taken from, only https url is supported for various reasons.
 GIT_DIR                   | /tmp/kube-ark     | Any valid directory | The local Git repository destination inside the container (No need to change it ever)
 GIT_USER_NAME             | kube-noah service | Any username        | The username Git uses when configuring git config --global user.name
 GIT_USER_EMAIL            | kube-noah@service.com   | Any email address   | The email address Git uses when configuring git config --global user.email
 RESTORE                   | ---               | true                | Whether to trigger 'restore from Git to Kubernetes'
 BACKUP                    | ---               | true                | Whether to trigger 'backup from Kubernetes to Git'
-ENVIRONMENT               | ---               | Any name            | Although any name can be provided the name of the environment of the Kubernetes cluster is best appropriate for an understandable objects division and tracking
+KUBE_CLUSTER_NAME         | ---               | Any name            | Although any name can be provided a unique name of the Kubernetes cluster is best appropriate for an understandable objects division and tracking
 

@@ -2,12 +2,12 @@
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
-  name: tlser 
+  name: kube-noah 
 rules:
   - apiGroups:
       - ""
     resources:
-      - "secrets"
+      - ""
     verbs:
       - list
       - watch
@@ -19,66 +19,50 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
-  name: tlser
+  name: kube-noah
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: tlser
+  name: kube-noah
 subjects:
   - kind: ServiceAccount
-    name: tlser
+    name: kube-noah
     namespace: kube-system
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: tlser
+  name: kube-noah
   namespace: kube-system
 ---
-apiVersion: extensions/v1beta1
-kind: Deployment
+apiVersion: batch/v1beta1
+kind: CronJob
 metadata:
-  name: tlser
+  name: kube-noah
   namespace: kube-system
   labels:
-    app: tlser
+    app: kube-noah
 spec:
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: tlser
+  schedule: "*/5 * * * *"
+  jobTemplate:
     spec:
-      serviceAccountName: tlser
-      initContainers:
-      - name: tlser-from-git-to-kube
-        image: gefenonline/tlser
-        env:
-        - name: SYNC_TO_KUBE_ONCE
-          value: 'true'
-        - name: GIT_REPO
-          valueFrom:
-            secretKeyRef:
-              name: env-vars
-              key: TLS_CERTIFICATES_REPO_URL
-        - name: ENVIRONMENT
-          valueFrom:
-            secretKeyRef:
-              name: env-vars
-              key: UID
-      containers:
-      - name: tlser-from-kube-to-git
-        image: gefenonline/tlser
-        env:
-        - name: SYNC_TO_GIT_INTERVALLY
-          value: 'true'
-        - name: GIT_REPO
-          valueFrom:
-            secretKeyRef:
-              name: env-vars
-              key: TLS_CERTIFICATES_REPO_URL
-        - name: ENVIRONMENT
-          valueFrom:
-            secretKeyRef:
-              name: env-vars
-              key: UID
+      template:
+        spec:
+          serviceAccountName: kube-noah
+          restartPolicy: OnFailure
+          containers:
+          - name: kube-noah
+            image: gefenonline/kube-noah
+            env:
+            - name: BACKUP
+              value: 'true'
+            - name: GIT_REPO_URL
+              valueFrom:
+                secretKeyRef:
+                  name: env-vars
+                  key: KUBE_ARK_REPO_URL
+            - name: KUBE_CLUSTER_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: env-vars
+                  key: KUBE_CLUSTER_NAME
