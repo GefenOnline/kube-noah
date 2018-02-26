@@ -24,7 +24,7 @@ function prerequisites {
     [ "$RESTORE" == "true" ] && echo $(logPrefix) - Will execute RESTORE
     [ "$BACKUP" == "true" ]  && echo $(logPrefix) - Will execute BACKUP
 
-    # Cloning TLS Git Repository and configure Git user name and user email or exit
+    # Cloning Kubernetes objects storage Git Repository and configure Git user name and user email or exit
     echo $(logPrefix) - Cloning Git repository
     git clone $GIT_REPO $GIT_DIR || exit
     echo $(logPrefix) - Configuring git user.name : $GIT_USER_NAME

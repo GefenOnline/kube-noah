@@ -6,14 +6,15 @@ The kube-noah uses two main processes that are called on-demand when setting the
 1. Restore objects from Git to Kubernetes. (triggered by RESTORE variable)
 2. Backup objects from Kubernetes to Git. (triggered by BACKUP variable)
 
-**Note**: it is possible to trigger one or both of the processes (the order in which they are numbered above is the orther in which they will run if they are both triggered)
+**Notes**:
+- it is possible to trigger one or both of the processes (the order in which they are numbered above is the orther in which they will run if they are both triggered)
+- All environment variables below are required so those that has no default must be set, otherwise kube-noah will fail to run, with the exception of RESTORE and BACKUP that can be set one instead of the other\
 
 **Recommended**:
 - Trigger the processes separately.
-- Trigger 'Restore objects from Git to Kubernetes' in a job container (once), in cluster startup, and wait for its exit code, before moving forward, because some resources better to be restored, then regenerated for example: when finish successfully, Lets Encrypt TLS certificates are loaded as Kubernetes secrets and therefore used instead of requesting new ones from Let't Encrypt and wasting quota
+- Trigger 'Restore objects from Git to Kubernetes' in a job container (once), in cluster startup, and wait for its exit code, before moving forward, because some resources better to be restored then regenerated, for example: Lets Encrypt TLS certificates are loaded as Kubernetes secrets and therefore used instead of requesting new ones from Let't Encrypt and wasting quota.
 - Trigger 'Backup objects from Kubernetes to Git' in a cronjob container (infinitely)
-
-**Important**: Both of the proccesses because it destined to run once, so the Kubernetes scheduler (or any other container orchestrator scheduler for that matter) will try to initiate the container in an infinite loop, everytime the container will exit when it is finished.
+- Use private repository for the backend storage, if you do, needless to say that the GIT_REPO url should contain user and password/token
 
 ---
 ### Environment Variables
@@ -26,7 +27,4 @@ GIT_USER_EMAIL            | kube-noah@service.com   | Any email address   | The 
 RESTORE                   | ---               | true                | Whether to trigger restore from Git to Kubernetes
 BACKUP                    | ---               | true                | Whether to trigger backup from Kubernetes to Git
 ENVIRONMENT               | ---               | Any name            | Although any name can be provided the name of the environment of the Kubernetes cluster is best appropriate for an understandable objects division and tracking
-
-**NOTE**: All environment variables are required so those that has no default must be set, otherwise kube-noah will fail to run, with the exception of RESTORE and BACKUP that can be set one instead of the other\
-**Recommended** (on the edge of **mandatory**): use private repository as your storage, if you do, needless to say that the GIT_REPO url should contain user and password/token
 
