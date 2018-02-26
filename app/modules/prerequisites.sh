@@ -31,13 +31,12 @@ function prerequisites {
     git config --global user.name $GIT_USER_NAME || exit
     echo $(logPrefix) - Configuring git user.email : $GIT_USER_EMAIL
     git config --global user.email $GIT_USER_EMAIL || exit
-
 }
 
 # Main
-echo $(logPrefix) "-------------"
-echo $(logPrefix) "Prerequisites"
-echo $(logPrefix) "-------------"
+echo $(logPrefix) "------------------------------"
+echo $(logPrefix) "Checking/Setting Prerequisites"
+echo $(logPrefix) "------------------------------"
 prerequisites
 
 

@@ -27,7 +27,6 @@ function pushToGit {
     else
         echo $(logPrefix) - No new changes were found.
     fi
-
 }
 
 # Exports Kubernetes objects as yaml files to the git folder
@@ -81,11 +80,11 @@ function pullFromKube {
 }
 
 # Main
-echo $(logPrefix) "-------------------------------------------"
-echo $(logPrefix) "Backup Kubernetes objects to Git repository"
-echo $(logPrefix) "-------------------------------------------"
+echo $(logPrefix) "-------------------------------------------------------"
+echo $(logPrefix) "Start backuping up Kubernetes objects to Git repository"
+echo $(logPrefix) "-------------------------------------------------------"
 pullFromKube 
 pushToGit
-echo $(logPrefix) "-----------------------------------------------------------"
-echo $(logPrefix) "Successfully backed up Kubernetes objects to Git repository"
-echo $(logPrefix) "-----------------------------------------------------------"
+echo $(logPrefix) "---------------------------------------------------------------------"
+echo $(logPrefix) "Successfully Finish backuping up Kubernetes objects to Git repository"
+echo $(logPrefix) "---------------------------------------------------------------------"

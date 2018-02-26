@@ -39,10 +39,10 @@ function pushToKube {
 }
 
 # Main
-echo $(logPrefix) "----------------------------------------------"
-echo $(logPrefix) "Restore Kubernetes objects from Git repository"
-echo $(logPrefix) "----------------------------------------------"
+echo $(logPrefix) "------------------------------------------------------"
+echo $(logPrefix) "Start restoring Kubernetes objects from Git repository"
+echo $(logPrefix) "------------------------------------------------------"
 pushToKube
-echo $(logPrefix) "------------------------------------------------------------"
-echo $(logPrefix) "Successfully restored Kubernetes objects from Git repository"
-echo $(logPrefix) "------------------------------------------------------------"
+echo $(logPrefix) "--------------------------------------------------------------------"
+echo $(logPrefix) "Successfully finish restoring Kubernetes objects from Git repository"
+echo $(logPrefix) "--------------------------------------------------------------------"
