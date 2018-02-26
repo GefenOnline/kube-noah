@@ -1,6 +1,6 @@
 # kube-noah
 The kube-noah is designed to maintain all or some of the Kubernetes cluster objects:
-Deployments/Secrets/ConfigMaps/ingresses etc..
+Deployments/Secrets/ConfigMaps/Ingresses etc..
 
 The kube-noah uses two main processes that are called on-demand when setting their appropriate environment variables
 1. Restore objects from Git to Kubernetes. (triggered by RESTORE variable)
