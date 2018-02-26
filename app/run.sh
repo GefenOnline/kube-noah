@@ -11,7 +11,7 @@ RESTORE=$RESTORE
 BACKUP=$BACKUP
 
 # Fixed Global parameters
-EXCLUDE_NAMESPACES="default|kube-public|weave|kube-system|yellow|green"
+EXCLUDE_NAMESPACES="default|kube-public|weave|kube-system"
 EXCLUDE_OBJECTS="default-token"
 INCLUDE_OBJECT_TYPES="deployments|hpa|secrets|configmaps|ingresses|services"
 
