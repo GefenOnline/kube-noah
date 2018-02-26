@@ -67,8 +67,7 @@ metadata:
   labels:
     app: kube-noah
 spec:
-#  schedule: "*/5 * * * *"
-  schedule: "* * * * *"
+  schedule: "0 0 * * *"
   jobTemplate:
     spec:
       template:
