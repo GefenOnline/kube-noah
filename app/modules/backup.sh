@@ -77,8 +77,7 @@ function pullFromKube {
 
         done <<< "${objectTypes}" || echo $(logPrefix) - No desired object types were specified
 
-    done <<< "${nameSpaces}" || echo $(logPrefix) - No namespaces detected for backup, exiting gracefully 
-
+    done <<< "${nameSpaces}" || echo $(logPrefix) - No namespaces detected for backup, exiting gracefully
 }
 
 # Main
@@ -87,3 +86,6 @@ echo $(logPrefix) "Backup Kubernetes objects to Git repository"
 echo $(logPrefix) "-------------------------------------------"
 pullFromKube 
 pushToGit
+echo $(logPrefix) "-----------------------------------------------------------"
+echo $(logPrefix) "Successfully backed up Kubernetes objects to Git repository"
+echo $(logPrefix) "-----------------------------------------------------------"

@@ -17,6 +17,6 @@ INCLUDE_OBJECT_TYPES="deployments|hpa|secrets|configmaps|ingresses|services"
 
 
 . $BASEDIR/modules/utils.sh
-. $BASEDIR/modules/prerequisites.sh
+#. $BASEDIR/modules/prerequisites.sh
 [ "$RESTORE" == "true" ] && . $BASEDIR/modules/restore.sh
 [ "$BACKUP" == "true" ]  && . $BASEDIR/modules/backup.sh
