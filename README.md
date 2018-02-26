@@ -8,13 +8,13 @@ The kube-noah uses two main processes that are called on-demand when setting the
 
 **Notes**:
 - it is possible to trigger one or both of the processes (the order in which they are numbered above is the orther in which they will run if they are both triggered)
-- All environment variables below are required so those that has no default must be set, otherwise kube-noah will fail to run, with the exception of RESTORE and BACKUP that can be set one instead of the other\
+- All environment variables below are required so those that has no default must be set, otherwise kube-noah will fail to run, with the exception of RESTORE and BACKUP that can be set one instead of the other
 
 **Recommended**:
 - Trigger the processes separately.
 - Trigger 'Restore objects from Git to Kubernetes' in a job container (once), in cluster startup, and wait for its exit code, before moving forward, because some resources better to be restored then regenerated, for example: Lets Encrypt TLS certificates are loaded as Kubernetes secrets and therefore used instead of requesting new ones from Let't Encrypt and wasting quota.
 - Trigger 'Backup objects from Kubernetes to Git' in a cronjob container (infinitely)
-- Use private repository for the backend storage, if you do, needless to say that the GIT_REPO url should contain user and password/token
+- Use private repository for the backend storage, if you do, needless to say that the ```GIT_REPO``` url should contain user and password/token
 
 ---
 ### Environment Variables
