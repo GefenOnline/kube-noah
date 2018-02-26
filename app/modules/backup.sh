@@ -32,7 +32,6 @@ function pushToGit {
 # Exports Kubernetes objects as yaml files to the git folder
 function pullFromKube {
     
-
     # Get list of filtered namespaces, exit if fails
     echo $(logPrefix) - Pulling namespaces from Kubernetes cluster: \'$KUBE_CLUSTER_NAME\'
     nameSpacesPullCmd="kubectl get namespaces --output custom-columns=NAME:.metadata.name"
