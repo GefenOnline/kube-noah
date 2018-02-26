@@ -18,7 +18,7 @@ The kube-noah is designed to backup and restore Kubernetes cluster objects: Depl
 Key                       | Default value     |  Possible values    | Description
 ------------------------- | ----------------- | ------------------- | ----------------
 GIT_REPO_URL              | ---               | Any https Git url   | The repository in which the objects are stored, backed up to and taken from, only https url is supported for various reasons.
-GIT_DIR                   | /tmp/kube-ark     | Any valid directory | The local Git repository destination inside the container (No need to change it ever)
+GIT_LOCAL_DIR                   | /tmp/kube-ark     | Any valid directory | The local Git repository destination inside the container (No need to change it ever)
 GIT_USER_NAME             | kube-noah service | Any username        | The username Git uses when configuring git config --global user.name
 GIT_USER_EMAIL            | kube-noah@service.com   | Any email address   | The email address Git uses when configuring git config --global user.email
 RESTORE                   | ---               | true                | Whether to trigger 'restore from Git to Kubernetes'

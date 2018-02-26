@@ -7,21 +7,21 @@
 function pushToGit {
 
     # Collect Git status output
-    statusOutput=$(git --git-dir=$GIT_DIR/.git --work-tree=$GIT_DIR status -s)
+    statusOutput=$(git --git-dir=$GIT_LOCAL_DIR/.git --work-tree=$GIT_LOCAL_DIR status -s)
 
     # Checking for changes - add, commit, pull and push if necessary
     if [ ! -z "$statusOutput" ]; then
 
     	echo $(logPrefix) - New changes detected: $statusOutput
-    	git --git-dir=$GIT_DIR/.git --work-tree=$GIT_DIR add -A
-    	git --git-dir=$GIT_DIR/.git --work-tree=$GIT_DIR commit -am "Automatic changes by by tlser service"
+    	git --git-dir=$GIT_LOCAL_DIR/.git --work-tree=$GIT_LOCAL_DIR add -A
+    	git --git-dir=$GIT_LOCAL_DIR/.git --work-tree=$GIT_LOCAL_DIR commit -am "Automatic changes by by tlser service"
 
     	# Pulling changes or exit if there is a merge conflict
         echo $(logPrefix) - Pulling changes from the Git repository
-    	git --git-dir=$GIT_DIR/.git --work-tree=$GIT_DIR pull --no-edit || exit
+    	git --git-dir=$GIT_LOCAL_DIR/.git --work-tree=$GIT_LOCAL_DIR pull --no-edit || exit
 
 	    # Pushing changes or exit if changes where still made someplace else between the last pull (which is the command above) to this push
-    	git --git-dir=$GIT_DIR/.git --work-tree=$GIT_DIR push || exit
+    	git --git-dir=$GIT_LOCAL_DIR/.git --work-tree=$GIT_LOCAL_DIR push || exit
     	echo $(logPrefix) - New changes successfully pushed to the Git repository.
 
     else
@@ -42,7 +42,7 @@ function pullFromKube {
     while read -r nameSpace; do
 
         # Creating folder for the namespace if absent
-        nameSpaceDir=$GIT_DIR/$KUBE_CLUSTER_NAME/$nameSpace
+        nameSpaceDir=$GIT_LOCAL_DIR/$KUBE_CLUSTER_NAME/$nameSpace
         echo $(logPrefix) - Ensuring folder: $nameSpaceDir for namespace: \'$nameSpace\'
         mkdir -p $nameSpaceDir
 
@@ -60,7 +60,7 @@ function pullFromKube {
 
             # Getting list of Kubernetes objects of a specific type and set their directory variable
             objects=$(kubectl get $objectType --namespace=$nameSpace --output custom-columns=NAME:.metadata.name | egrep -v "$EXCLUDE_OBJECTS" | grep -v NAME);
-            objectTypeDir=$GIT_DIR/$KUBE_CLUSTER_NAME/$nameSpace/$objectType;
+            objectTypeDir=$GIT_LOCAL_DIR/$KUBE_CLUSTER_NAME/$nameSpace/$objectType;
 
             # If objcets found, ensure their directory and iterate one by one.
             [ ! -z "$objects" ] &&

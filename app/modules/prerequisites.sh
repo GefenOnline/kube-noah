@@ -26,7 +26,7 @@ function prerequisites {
 
     # Cloning Kubernetes objects storage Git Repository and configure Git user name and user email or exit
     echo $(logPrefix) - Cloning Git repository
-    git clone $GIT_REPO_URL $GIT_DIR || exit
+    git clone $GIT_REPO_URL $GIT_LOCAL_DIR || exit
     echo $(logPrefix) - Configuring git user.name  : $GIT_USER_NAME
     git config --global user.name $GIT_USER_NAME || exit
     echo $(logPrefix) - Configuring git user.email : $GIT_USER_EMAIL
