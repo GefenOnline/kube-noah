@@ -1,7 +1,7 @@
 # kube-noah
 The kube-noah is designed to backup and restore Kubernetes cluster objects: Deployments, Secrets, ConfigMaps, Ingresses and more, it uses two main processes that are called on-demand when setting their appropriate environment variables:
-1. Restore objects from Git to Kubernetes (triggered by RESTORE variable).
-2. Backup objects from Kubernetes to Git (triggered by BACKUP variable).
+1. Restore objects from Git to Kubernetes (triggered by ```RESTORE``` variable).
+2. Backup objects from Kubernetes to Git (triggered by ```BACKUP``` variable).
 
 **Notes**:
 - it is possible to trigger one or both of the processes (the order in which they are numbered above is the orther in which they will run if they are both triggered)
@@ -21,7 +21,7 @@ GIT_REPO                  | ---               | Any https Git url   | The reposi
 GIT_DIR                   | /tmp/kube-ark     | Any valid directory | The local Git repository destination inside the container (No need to change it ever)
 GIT_USER_NAME             | kube-noah service | Any username        | The username Git uses when configuring git config --global user.name
 GIT_USER_EMAIL            | kube-noah@service.com   | Any email address   | The email address Git uses when configuring git config --global user.email
-RESTORE                   | ---               | true                | Whether to trigger restore from Git to Kubernetes
-BACKUP                    | ---               | true                | Whether to trigger backup from Kubernetes to Git
+RESTORE                   | ---               | true                | Whether to trigger 'restore from Git to Kubernetes'
+BACKUP                    | ---               | true                | Whether to trigger 'backup from Kubernetes to Git'
 ENVIRONMENT               | ---               | Any name            | Although any name can be provided the name of the environment of the Kubernetes cluster is best appropriate for an understandable objects division and tracking
 
