@@ -7,15 +7,15 @@ function prerequisites {
 
     # Checking for environment variables
     if [ -z "$GIT_REPO_URL" ]; then
-        echo $(logPrefix) - Error : Environment variable \"GIT_REPO_URL\" must be set
+        echo $(logPrefix) - Error : Environment variable \'GIT_REPO_URL\' must be set
         exit 1
     fi
     if [ -z "$KUBE_CLUSTER_NAME" ]; then
-        echo $(logPrefix) - Error : Environment variable \"KUBE_CLUSTER_NAME\" must be set
+        echo $(logPrefix) - Error : Environment variable \'KUBE_CLUSTER_NAME\' must be set
         exit 1
     fi
     if [ "$RESTORE" != "true" ] && [ "$BACKUP" != "true" ]; then 
-        echo $(logPrefix) - Error : At least one of the environment variables \"RESTORE\" or \"BACKUP\" must be set to true
+        echo $(logPrefix) - Error : At least one of the environment variables \'RESTORE\' or \'BACKUP\' must be set to true
         exit 1
     fi
 
