@@ -1,11 +1,11 @@
 # kube-noah
 The kube-noah is designed to backup and restore Kubernetes cluster objects: Deployments, Secrets, ConfigMaps, Ingresses and more, it uses two main processes that are called on-demand when setting their appropriate environment variables:
-1. Restore objects from Git to Kubernetes (triggered by ```RESTORE``` variable).
-2. Backup objects from Kubernetes to Git (triggered by ```BACKUP``` variable).
+1. Restore objects from Git to Kubernetes (triggered by ```RESTORE```).
+2. Backup objects from Kubernetes to Git (triggered by ```BACKUP```).
 
 **Notes**:
 - it is possible to trigger one or both of the processes (the order in which they are numbered above is the orther in which they will run if they are both triggered)
-- All environment variables below are required so those that has no default must be set, otherwise kube-noah will fail to run, with the exception of RESTORE and BACKUP that can be set one instead of the other
+- All environment variables below are required so those that has no default must be set, otherwise kube-noah will fail to run, with the exception of ```RESTORE``` and ```BACKUP``` that can be set one instead of the other
 
 **Recommended**:
 - Trigger the processes separately.
