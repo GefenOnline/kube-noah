@@ -9,9 +9,9 @@ The kube-noah is designed to backup and restore Kubernetes cluster objects: Depl
 
 **Recommended**:
 - Trigger the processes separately.
-- Trigger 'Restore objects from Git to Kubernetes' in a job container (once), in cluster startup, and wait for its exit code, before moving forward, because some resources better to be restored then regenerated, for example: Lets Encrypt TLS certificates are loaded as Kubernetes secrets and therefore used instead of requesting new ones from Let't Encrypt and wasting quota.
-- Trigger 'Backup objects from Kubernetes to Git' in a cronjob container (infinitely)
-- Use private repository for the backend storage, if you do, needless to say that the ```GIT_REPO``` url should contain user and password/token
+- Trigger 'Restore objects from Git to Kubernetes' in a job container (once), in cluster startup, and wait for its exit code, before moving forward, if you have resources that are better to be restored then regenerated, like Lets Encrypt TLS certificates for example, that when are loaded as Kubernetes secrets, used instead of requesting new ones from Let't Encrypt and wasting quota.
+- Trigger 'Backup objects from Kubernetes to Git' in a cronjob container (infinitely).
+- Use private repository for the backend storage, if you do, needless to say that the ```GIT_REPO``` url should contain user and password/token.
 
 ---
 ### Environment Variables
