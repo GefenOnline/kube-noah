@@ -22,7 +22,7 @@ function prerequisites {
     # Printing Environment variables
     echo $(logPrefix) - Working under ENVIRONMENT : $ENVIRONMENT
     [ "$RESTORE" == "true" ] && echo $(logPrefix) - Will execute RESTORE
-    [ "$BACKUP" == "true" ]  && echo $(logPrefix) - Will execute BACKUP_INTERVALLY
+    [ "$BACKUP" == "true" ]  && echo $(logPrefix) - Will execute BACKUP
 
     # Cloning TLS Git Repository and configure Git user name and user email or exit
     echo $(logPrefix) - Cloning Git repository

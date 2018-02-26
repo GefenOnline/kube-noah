@@ -2,8 +2,7 @@
 
 # Set Global parameters with injected environment variables or their default value
 BASEDIR=$(dirname "$0")
-INTERVAL="${INTERVAL:-5m}"
-GIT_DIR="${GIT_DIR:-/tmp/certificates}"
+GIT_DIR="${GIT_DIR:-/tmp/kube-ark}"
 GIT_USER_NAME="${GIT_USER_NAME:-kube-noah service}"
 GIT_USER_EMAIL="${GIT_USER_EMAIL:-kube-noah@service.com}"
 ENVIRONMENT=$ENVIRONMENT
