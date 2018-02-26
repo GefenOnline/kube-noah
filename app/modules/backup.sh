@@ -36,30 +36,37 @@ function pullFromKube {
     # Get list of filtered Kubernetes namespaces 
     nameSpaces=$(kubectl get namespaces --output custom-columns=NAME:.metadata.name | egrep -v "$EXCLUDE_NAMESPACES" | grep -v NAME);
 
-    # If namespaces were found
-    [ ! -z "$nameSpaces" ] && echo $(logPrefix) - Detected namespaces: \'$nameSpaces\' for backup &&
+    # If namespaces were found, iterate one by one
+    [ ! -z "$nameSpaces" ] &&
+    echo $(logPrefix) - Detected namespaces: \'$nameSpaces\' for backup... &&
     while read -r nameSpace; do
 
         # Creating folder for the namespace if absent
         nameSpaceDir=$GIT_DIR/$ENVIRONMENT/$nameSpace
-        [ ! -d "$nameSpaceDir" ] && echo $(logPrefix) - Creating folder $nameSpaceDir for namespace: \'$nameSpace\' && mkdir -p $nameSpaceDir
+        echo $(logPrefix) - Ensuring folder: $nameSpaceDir for namespace: \'$nameSpace\'
+        mkdir -p $nameSpaceDir
 
         # Pulling the namespace to its folder
-        echo $(logPrefix) - Pulling namespace: $nameSpace...
-        kubectl get namespace $nameSpace --export=true --output=yaml > $nameSpaceDir/$nameSpace.yml || exit
+        echo $(logPrefix) - Pulling namespace: \'$nameSpace\' to file: $nameSpaceDir/$nameSpace.yml
+        kubectl get namespace bla --export=true --output=yaml > $nameSpaceDir/$nameSpace.yml || exit
 
-        # Getting list of Kubernetes object types
+        # Getting list of Kubernetes object types (parsing a given fixed global parameter)
         objectTypes=$(echo -e `echo $INCLUDE_OBJECT_TYPES | sed 's/|/\\\n/g'`);
-        [ ! -z "$objectTypes" ] && echo $(logPrefix) - Starting to backup objects of type: \'$objectTypes\' for namespace: \'$nameSpace\' &&
+
+        # If objcets types were given, iterate one by one.
+        [ ! -z "$objectTypes" ] &&
+        echo $(logPrefix) - Starting to backup objects of type: \'$objectTypes\' for namespace: \'$nameSpace\' &&
         while read -r objectType; do
 
-            # Creating folder for the object type if absent
-            objectTypeDir=$GIT_DIR/$ENVIRONMENT/$nameSpace/$objectType
-            [ ! -d "$objectTypeDir" ] && echo $(logPrefix) - Creating folder $objectTypeDir for objects of type: \'$objectType\' && mkdir -p $objectTypeDir
-
-            # Getting list of Kubernetes objects of a specific type 
+            # Getting list of Kubernetes objects of a specific type and set their directory variable
             objects=$(kubectl get $objectType --namespace=$nameSpace --output custom-columns=NAME:.metadata.name | egrep -v "$EXCLUDE_OBJECTS" | grep -v NAME);
-            [ ! -z "$objects" ] && echo $(logPrefix) - Detected objects of type: \'$objectType\' for namespace: \'$nameSpace\' &&
+            objectTypeDir=$GIT_DIR/$ENVIRONMENT/$nameSpace/$objectType;
+
+            # If objcets found, ensure their directory and iterate one by one.
+            [ ! -z "$objects" ] &&
+            echo $(logPrefix) - Detected objects of type: \'$objectType\' for namespace: \'$nameSpace\' &&
+            echo $(logPrefix) - Ensuring folder $objectTypeDir for objects of type: \'$objectType\' &&
+            mkdir -p $objectTypeDir &&
             while read -r object; do
 
                 # Pulling Kubernetes object to its folder or exit if fail (--export=true stripping it from cluster-specific-information)
@@ -79,4 +86,4 @@ echo $(logPrefix) "-------------------------------------------"
 echo $(logPrefix) "Backup Kubernetes objects to Git repository"
 echo $(logPrefix) "-------------------------------------------"
 pullFromKube 
-#pushToGit
+pushToGit
