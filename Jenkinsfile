@@ -5,7 +5,7 @@
 import groovy.transform.Field
 
 // Organization name and project name
-/*@Field ORG_NAME = JOB_NAME.tokenize('/')[0].toLowerCase()
+@Field ORG_NAME = JOB_NAME.tokenize('/')[0].toLowerCase()
 @Field PROJECT_NAME = JOB_NAME.tokenize('/')[1].toLowerCase()
 
 // Image name, version and the image itself once it is built
@@ -22,7 +22,7 @@ import groovy.transform.Field
 @Field DOCKER_REGISTRY_CREDS_ID = '52d6d5f9-4dea-426e-b561-2d419b0f3c48'
 
 // Norifications: Slack Channel
-@Field SLACK_CHANNEL = "#jenkins_pipelines"*/
+@Field SLACK_CHANNEL = "#jenkins_pipelines"
 
 //Build image using the files in the build directory
 def buildImage() {
@@ -68,25 +68,7 @@ def deleteImage() {
 }
 
 // Main function to be called upon start
-def start() {
-  ORG_NAME = JOB_NAME.tokenize('/')[0].toLowerCase()
-  PROJECT_NAME = JOB_NAME.tokenize('/')[1].toLowerCase()
 
-  // Image name, version and the image itself once it is built
-  BUILD_NAME = ORG_NAME + "/" + PROJECT_NAME
-  IMAGE_VERSION = BRANCH_NAME.tokenize('/').last() + ".${BUILD_NUMBER}"
-  IMAGE = ''
-
-  // Build type and dir to use for the build
-  BUILD_TYPE = 'docker'
-  BUILD_DIR = "build/${BUILD_TYPE}"
-
-  // Docker registry and credentials
-  DOCKER_REGISTRY = 'https://registry.hub.docker.com'
-  DOCKER_REGISTRY_CREDS_ID = '52d6d5f9-4dea-426e-b561-2d419b0f3c48'
-
-  // Norifications: Slack Channel
-  SLACK_CHANNEL = "#jenkins_pipelines"
   pipeline {
 
     agent any
@@ -153,6 +135,3 @@ def start() {
       }
     }
   }
-}
-
-start()
