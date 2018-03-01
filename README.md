@@ -1,4 +1,5 @@
-<img src="images/kube-noah.png" width="200">
+<img src="images/kube-noah.png" width="20">
+
 # kube-noah
 The kube-noah is designed to backup and restore Kubernetes cluster objects: Deployments, Secrets, ConfigMaps, Ingresses and more, it uses two main processes that are called on-demand when setting their appropriate environment variables:
 1. Restore objects from Git to Kubernetes (triggered by ```RESTORE```).
