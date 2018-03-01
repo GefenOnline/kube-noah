@@ -1,5 +1,10 @@
-# <img src="images/kube-noah.png" width="30"> kube-noah
-The kube-noah is designed to backup and restore Kubernetes cluster objects: Deployments, Secrets, ConfigMaps, Ingresses and more, it uses two main processes that are called on-demand when setting their appropriate environment variables:
+# kube-noah
+
+<img src="images/kube-noah.png" width="100"> kube-noah
+
+## What is kube-noah
+
+kube-noah is a tool designed to backup and restore Kubernetes cluster objects: Deployments, Secrets, ConfigMaps, Ingresses, Services and more, it uses two main processes that are called on-demand when setting their appropriate environment variables:
 1. Restore objects from Git to Kubernetes (triggered by ```RESTORE```).
 2. Backup objects from Kubernetes to Git (triggered by ```BACKUP```).
 
@@ -7,7 +12,7 @@ The kube-noah is designed to backup and restore Kubernetes cluster objects: Depl
 - it is possible to trigger one or both of the processes (the order in which they are numbered above is the orther in which they will run if they are both triggered)
 - All environment variables below are required so those that has no default must be set, otherwise kube-noah will fail to run, with the exception of ```RESTORE``` and ```BACKUP``` that can be set one instead of the other
 
-**Recommended**:
+**Recommendations**:
 - Trigger the processes separately.
 - Trigger 'Restore objects from Git to Kubernetes' in a job container (once), in cluster startup, and wait for its exit code, before moving forward, if you have resources that are better to be restored then regenerated, like Lets Encrypt TLS certificates for example, that when are loaded as Kubernetes secrets, used instead of requesting new ones from Let't Encrypt and wasting quota.
 - Trigger 'Backup objects from Kubernetes to Git' in a cronjob container (infinitely).
