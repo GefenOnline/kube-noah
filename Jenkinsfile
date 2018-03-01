@@ -3,7 +3,8 @@
 /* The goal is to minimize the use of groovy functions as mush as possible
    and replace is with Jenkins pipeline declerative language when docker is supported */
 import groovy.transform.Field
-
+import jenkins.model.*
+jenkins = Jenkins.instance
 // Organization name and project name
 /*@Field ORG_NAME = JOB_NAME.tokenize('/')[0].toLowerCase()
 @Field PROJECT_NAME = JOB_NAME.tokenize('/')[1].toLowerCase()
