@@ -5,7 +5,7 @@
 import groovy.transform.Field
 
 // Organization name and project name
-@Field ORG_NAME = JOB_NAME.tokenize('/')[0].toLowerCase()
+/*@Field ORG_NAME = JOB_NAME.tokenize('/')[0].toLowerCase()
 @Field PROJECT_NAME = JOB_NAME.tokenize('/')[1].toLowerCase()
 
 // Image name, version and the image itself once it is built
@@ -19,7 +19,7 @@ import groovy.transform.Field
 
 // Docker registry and credentials
 @Field DOCKER_REGISTRY = 'https://registry.hub.docker.com'
-@Field DOCKER_REGISTRY_CREDS_ID = '52d6d5f9-4dea-426e-b561-2d419b0f3c48'
+@Field DOCKER_REGISTRY_CREDS_ID = '52d6d5f9-4dea-426e-b561-2d419b0f3c48'*/
 
 // Norifications: Slack Channel
 @Field SLACK_CHANNEL = "#jenkins_pipelines"
@@ -69,7 +69,7 @@ def deleteImage() {
 
 // Main function to be called upon start
 def start() {
-    
+
   pipeline {
 
     agent any
@@ -83,6 +83,7 @@ def start() {
             DOCKER: { sh "docker info" },
             DOCKER_COMPOSE: { sh "docker-compose version" },
             ENVIRONMENT: {
+              echo "JOB_NAME                : ${JOB_NAME}"
               echo "IMAGE_NAME              : ${IMAGE_NAME}"
               echo "IMAGE_VERSION           : ${IMAGE_VERSION}"
               echo "BUILD_TYPE              : ${BUILD_TYPE}"
