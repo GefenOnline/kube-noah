@@ -69,7 +69,7 @@ def deleteImage() {
 
 // Main function to be called upon start
 
-  pipeline {
+pipeline {
 
     agent any
 
@@ -132,4 +132,4 @@ def deleteImage() {
           message: "The pipeline ${currentBuild.fullDisplayName} is unstable. ${BUILD_URL}"
       }
     }
-  }
+}
