@@ -9,8 +9,8 @@ import groovy.transform.Field
 @Field PROJECT_NAME = JOB_NAME.tokenize('/')[1].toLowerCase()
 
 // Image name, version and the image itself once it is built
-@Field BUILD_NAME = ORG_NAME + "/" + PROJECT_NAME*/
-@Field IMAGE_VERSION = env.BRANCH_NAME.tokenize('/').last() + ".${BUILD_NUMBER}"
+@Field BUILD_NAME = ORG_NAME + "/" + PROJECT_NAME
+@Field IMAGE_VERSION = BRANCH_NAME.tokenize('/').last() + ".${BUILD_NUMBER}"
 @Field IMAGE = ''
 
 // Build type and dir to use for the build
@@ -22,7 +22,7 @@ import groovy.transform.Field
 @Field DOCKER_REGISTRY_CREDS_ID = '52d6d5f9-4dea-426e-b561-2d419b0f3c48'
 
 // Norifications: Slack Channel
-@Field SLACK_CHANNEL = "#jenkins_pipelines"
+@Field SLACK_CHANNEL = "#jenkins_pipelines"*/
 
 //Build image using the files in the build directory
 def buildImage() {
