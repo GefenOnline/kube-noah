@@ -5,11 +5,11 @@
 import groovy.transform.Field
 
 // Organization name and project name
-@Field ORG_NAME = ${JOB_NAME}.tokenize('/')[0].toLowerCase()
-@Field PROJECT_NAME = ${JOB_NAME}.tokenize('/')[1].toLowerCase()
+/*@Field ORG_NAME = JOB_NAME.tokenize('/')[0].toLowerCase()
+@Field PROJECT_NAME = JOB_NAME.tokenize('/')[1].toLowerCase()
 
 // Image name, version and the image itself once it is built
-@Field BUILD_NAME = ORG_NAME + "/" + PROJECT_NAME
+@Field BUILD_NAME = ORG_NAME + "/" + PROJECT_NAME*/
 @Field IMAGE_VERSION = BRANCH_NAME.tokenize('/').last() + ".${BUILD_NUMBER}"
 @Field IMAGE = ''
 
@@ -80,9 +80,7 @@ def deleteImage() {
             /* Verify Docker for Docker builds, docker-compose for tests and print environment variables
             NOTE: here one should add testing tools commands (acbuild -v for rkt type builds for example) */
             DOCKER: { sh "docker info" },
-            DOCKER_COMPOSE: { sh "docker-compose version" },
             ENVIRONMENT: {
-              echo "JOB_NAME                : ${JOB_NAME}"
               echo "IMAGE_NAME              : ${IMAGE_NAME}"
               echo "IMAGE_VERSION           : ${IMAGE_VERSION}"
               echo "BUILD_TYPE              : ${BUILD_TYPE}"
