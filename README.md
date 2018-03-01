@@ -1,5 +1,8 @@
 # kube-noah
-[![Build Status](https://jenkins.onestage.xyz/buildStatus/icon?job=GefenOnline/kube-noah/master)](https://jenkins.onestage.xyz/view/all/job/GefenOnline/job/kube-noah/job/master/)
+[![BuildStatus Widget]][BuildStatus Result]
+
+[BuildStatus Result]: https://jenkins.onestage.xyz/view/all/job/GefenOnline/job/kube-noah/job/master/
+[BuildStatus Widget]: https://jenkins.onestage.xyz/buildStatus/icon?job=GefenOnline/kube-noah/master
 
 <img src="images/kube-noah.png" width="50">
 
