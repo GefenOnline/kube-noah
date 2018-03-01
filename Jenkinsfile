@@ -5,12 +5,12 @@
 import groovy.transform.Field
 
 // Organization name and project name
-@Field ORG_NAME = ${env.JOB_NAME}.tokenize('/')[0].toLowerCase()
-@Field PROJECT_NAME = ${env.JOB_NAME}.tokenize('/')[1].toLowerCase()
+@Field ORG_NAME = env.JOB_NAME.tokenize('/')[0].toLowerCase()
+@Field PROJECT_NAME = env.JOB_NAME.tokenize('/')[1].toLowerCase()
 
 // Image name, version and the image itself once it is built
 @Field BUILD_NAME = ORG_NAME + "/" + PROJECT_NAME
-@Field IMAGE_VERSION = ${env.BRANCH_NAME}..tokenize('/').last() + ".${BUILD_NUMBER}"
+@Field IMAGE_VERSION = BRANCH_NAME.tokenize('/').last() + ".${BUILD_NUMBER}"
 @Field IMAGE = ''
 
 // Build type and dir to use for the build
@@ -69,8 +69,7 @@ def deleteImage() {
 
 // Main function to be called upon start
 
-def start() {
-pipeline {
+  pipeline {
 
     agent any
 
@@ -133,5 +132,4 @@ pipeline {
           message: "The pipeline ${currentBuild.fullDisplayName} is unstable. ${BUILD_URL}"
       }
     }
-}
-}
+  }
