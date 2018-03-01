@@ -1,25 +1,21 @@
 #!/usr/bin/env groovy
 
 /* The goal is to minimize the use of groovy functions as mush as possible
-   and replace is with Jenkins pipeline declerative language when docker is supported
-
-   WHEN REPOSITORIES ARE SEPERATED AND CREATED WITH LOWER CASE !! ONE SHOULD CHANGE THE FOLLOWING:
-   PROJECT_NAME should be deleted and removed from IMAGE_NAME, TEST_FILE, BUILD_DIR and REPORTS_DIR
-   IMAGE_NAME should be generated entirely by JOB_NAME.tokenize */
-
+   and replace is with Jenkins pipeline declerative language when docker is supported */
 import groovy.transform.Field
 
-// Porject name : this is workaround to handle multiple project in the same repository
-@Field PROJECT_NAME = JOB_NAME.tokenize('/')[0]
+// Organization name and project name
+@Field ORG_NAME = JOB_NAME.tokenize('/')[0].toLowerCase()
+@Field PROJECT_NAME = JOB_NAME.tokenize('/')[1].toLowerCase()
 
 // Image name, version and the image itself once it is built
-@Field IMAGE_NAME = "gefenonline/" + PROJECT_NAME.toLowerCase()
+@Field BUILD_NAME = ORG_NAME + "/" + PROJECT_NAME
 @Field IMAGE_VERSION = BRANCH_NAME.tokenize('/').last() + ".${BUILD_NUMBER}"
 @Field IMAGE = ''
 
 // Build type and dir to use for the build
 @Field BUILD_TYPE = 'docker'
-@Field BUILD_DIR = "${PROJECT_NAME}/build/${BUILD_TYPE}"
+@Field BUILD_DIR = "build/${BUILD_TYPE}"
 
 // Docker registry and credentials
 @Field DOCKER_REGISTRY = 'https://registry.hub.docker.com'
