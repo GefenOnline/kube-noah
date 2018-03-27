@@ -13,7 +13,7 @@ BACKUP=$BACKUP
 # Fixed global parameters
 EXCLUDE_NAMESPACES="default|kube-public|weave|kube-system"
 EXCLUDE_OBJECTS="default-token"
-# When restoring the object types will be restored by this specific order (if backed-up)
+# When restoring, the object types will be restored by this specific order (if backed-up)
 INCLUDE_OBJECT_TYPES="secrets|configmaps|deployments|hpa|services|ingresses"
 
 . $BASEDIR/modules/utils.sh
