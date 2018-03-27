@@ -53,9 +53,9 @@ function pullFromKube {
         kubectl get namespace $nameSpace --export=true --output=yaml > $nameSpaceDir/$nameSpace.yml || exit
 
         # Getting list of Kubernetes object types (parsing a given fixed global parameter)
-        objectTypes=$(echo -e `echo $INCLUDE_OBJECT_TYPES | sed 's/|/\\\n/g'`);
+        objectTypes=$(echo -e `echo $INCLUDE_OBJECT_TYPES | sed "s/|/ /g"`);
 
-        # If objcets types were given, iterate one by one.
+        # If object types were given, iterate one by one.
         [ ! -z "$objectTypes" ] &&
         echo $(logPrefix) - Starting to backup objects of types: \'$objectTypes\' of namespace: \'$nameSpace\' &&
         while read -r objectType; do

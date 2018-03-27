@@ -10,10 +10,11 @@ KUBE_CLUSTER_NAME=$KUBE_CLUSTER_NAME
 RESTORE=$RESTORE
 BACKUP=$BACKUP
 
-# Fixed Global parameters
+# Fixed global parameters
 EXCLUDE_NAMESPACES="default|kube-public|weave|kube-system"
 EXCLUDE_OBJECTS="default-token"
-INCLUDE_OBJECT_TYPES="deployments|hpa|secrets|configmaps|ingresses|services"
+# When restoring the object types will be restored by this specific order (if backed-up)
+INCLUDE_OBJECT_TYPES="secrets|configmaps|deployments|hpa|services|ingresses"
 
 . $BASEDIR/modules/utils.sh
 . $BASEDIR/modules/prerequisites.sh

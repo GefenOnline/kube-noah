@@ -21,9 +21,14 @@ function pushToKube {
             echo $(logPrefix) - Applying namespace: \'$nameSpace\' from file: $nameSpaceDir/$nameSpace.yml
             kubectl apply -f $nameSpaceDir/$nameSpace.yml || exit
 
-            for objectTypeDir in $GIT_LOCAL_DIR/$KUBE_CLUSTER_NAME/$nameSpace/*; do
+            # Getting list of Kubernetes object types directories (parsing a given fixed global parameter)
+            objectTypeDirs=$(echo -e `echo $nameSpaceDir/$INCLUDE_OBJECT_TYPES | sed "s,|, $nameSpaceDir/,g"`);
 
-                # Filter directories under namespace directory
+            # If object types were given, iterate their (potential) directories one by one.
+            [ ! -z "$INCLUDE_OBJECT_TYPES" ] &&
+            for objectTypeDir in $objectTypeDirs; do
+
+                # If object type directory found
                 if [ -d $objectTypeDir ]; then
                     # Getting object type name from object type directory and applying yaml to kubernetes cluster
                     objectType=$(basename $objectTypeDir);
