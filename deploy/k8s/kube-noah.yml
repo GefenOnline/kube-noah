@@ -28,7 +28,7 @@ metadata:
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: kube-noah
+  name: kube-noah-restore
   namespace: kube-system
   labels:
     app: kube-noah
@@ -62,7 +62,7 @@ spec:
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: kube-noah
+  name: kube-noah-backup
   namespace: kube-system
   labels:
     app: kube-noah

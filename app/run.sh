@@ -10,11 +10,11 @@ KUBE_CLUSTER_NAME=$KUBE_CLUSTER_NAME
 RESTORE=$RESTORE
 BACKUP=$BACKUP
 
-# Fixed global parameters
-EXCLUDE_NAMESPACES="default|kube-public|weave|kube-system"
-EXCLUDE_OBJECTS="default-token"
-# When restoring, the object types will be restored by this specific order (if backed-up)
+# When backing up, only these object types will be backed up
+# When restoring, only these object types will be restored and in that specific order
 INCLUDE_OBJECT_TYPES="secrets|configmaps|deployments|hpa|services|ingresses"
+# When backing up, only the INCLUDE_OBJECT_TYPES that tolerate this filter will be backed up (using kubectl --show-labels)
+OBJECTS_FILTER="backup=kube-noah|kubernetes.io/tls"
 
 . $BASEDIR/modules/utils.sh
 . $BASEDIR/modules/prerequisites.sh
