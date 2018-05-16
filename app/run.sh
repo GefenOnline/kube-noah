@@ -14,7 +14,7 @@ BACKUP=$BACKUP
 # When restoring, only these object types will be restored and in that specific order
 INCLUDE_OBJECT_TYPES="secrets|configmaps|deployments|hpa|services|ingresses"
 # When backing up, only the INCLUDE_OBJECT_TYPES that tolerate this filter will be backed up (using kubectl --show-labels)
-OBJECTS_FILTER="backed-up-by=kube-noah|kubernetes.io/tls"
+OBJECTS_FILTER="backup=kube-noah|kubernetes.io/tls"
 
 . $BASEDIR/modules/utils.sh
 . $BASEDIR/modules/prerequisites.sh
