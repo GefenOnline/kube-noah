@@ -34,9 +34,9 @@ function pullFromKube {
     
     # Get list of filtered namespaces, exit if fails
     echo $(logPrefix) - Pulling namespaces from Kubernetes cluster: \'$KUBE_CLUSTER_NAME\'
-    nameSpacesPullCmd="kubectl get namespaces --output custom-columns=NAME:.metadata.name"
+    nameSpacesPullCmd="kubectl get namespaces --show-labels"
     $nameSpacesPullCmd 1> /dev/null || exit # Only for checking
-    nameSpaces=$($nameSpacesPullCmd | egrep -v "$EXCLUDE_NAMESPACES" | grep -v NAME)
+    nameSpaces=$($nameSpacesPullCmd | egrep "$OBJECTS_FILTER" | awk '{print $1'});
 
     # If namespaces were found, iterate one by one
     [ ! -z "$nameSpaces" ] &&
@@ -62,9 +62,9 @@ function pullFromKube {
 
             # Getting list of filtered namespace objects of a specific type and set their directory variable, exit if fail to pull
             echo $(logPrefix) - Pulling objects of type: \'$objectType\' of namespace: \'$nameSpace\'
-            objectsPullCmd="kubectl get $objectType --namespace=$nameSpace --output custom-columns=NAME:.metadata.name"
+            objectsPullCmd="kubectl get $objectType --namespace=$nameSpace --show-labels"
             $objectsPullCmd 1> /dev/null || exit # Only for checking 
-            objects=$($objectsPullCmd | egrep -v "$EXCLUDE_OBJECTS" | grep -v NAME);
+            objects=$($objectsPullCmd | egrep "$OBJECTS_FILTER" | awk '{print $1'});
             objectTypeDir=$GIT_LOCAL_DIR/$KUBE_CLUSTER_NAME/$nameSpace/$objectType;
 
             # If objcets found, ensure their directory and iterate one by one.

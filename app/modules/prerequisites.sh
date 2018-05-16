@@ -22,7 +22,7 @@ function prerequisites {
     # Printing Environment variables
     echo $(logPrefix) - Working under Kubernetes cluster : $KUBE_CLUSTER_NAME
     [ "$RESTORE" == "true" ] && echo $(logPrefix) - Will execute RESTORE
-    [ "$BACKUP" == "true" ]  && echo $(logPrefix) - Will execute BACKUP
+    [ "$BACKUP" == "true" ]  && echo $(logPrefix) - Will execute BACKUP for objects of types: \'$INCLUDE_OBJECT_TYPES\' that tolerate the filter: \'$OBJECTS_FILTER\'
 
     # Cloning Kubernetes objects storage Git Repository and configure Git user name and user email or exit
     echo $(logPrefix) - Cloning Git repository
@@ -38,5 +38,3 @@ echo $(logPrefix) "------------------------------"
 echo $(logPrefix) "Checking/Setting Prerequisites"
 echo $(logPrefix) "------------------------------"
 prerequisites
-
-
