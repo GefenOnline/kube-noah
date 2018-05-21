@@ -13,7 +13,7 @@ kube-noah is a tool designed to backup and restore Kubernetes cluster objects: D
 2. Backup objects from Kubernetes to Git (triggered by ```BACKUP```).
 
 **Notes**:
-- kube-noah will backup every object tainted with the label ```backup : kube-noah``` or from type: ```kubernetes.io/tls```
+- kube-noah will backup every object labled with: ```backup:kube-noah``` or from type: ```kubernetes.io/tls```
 - it is possible to trigger one or both of the processes (the order in which they are numbered above is the orther in which they will run if they are both triggered)
 - All environment variables below are required so those that has no default must be set, otherwise kube-noah will fail to run, with the exception of ```RESTORE``` and ```BACKUP``` that can be set one instead of the other
 
