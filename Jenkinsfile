@@ -2,6 +2,8 @@
 
 /* The goal is to minimize the use of groovy functions as mush as possible
    and replace is with Jenkins pipeline declerative language when docker is supported */
+import groovy.transform.Field
+
 
 
 //Build image using the files in the build directory
@@ -49,67 +51,67 @@ def deleteImage() {
 
 // Main function to be called upon start
 
-  pipeline {
+pipeline {
 
-    agent any
+  agent any
 
-    stages {
-      stage ('Verify Tools And Print Environment Vars') {
-        steps {
-          parallel (
-            /* Verify Docker for Docker builds, docker-compose for tests and print environment variables
-            NOTE: here one should add testing tools commands (acbuild -v for rkt type builds for example) */
-            DOCKER: { sh "docker info" },
-            ENVIRONMENT: {
-              echo "IMAGE_NAME              : ${IMAGE_NAME}"
-              echo "IMAGE_VERSION           : ${IMAGE_VERSION}"
-              echo "BUILD_TYPE              : ${BUILD_TYPE}"
-              echo "BUILD_DIR               : ${BUILD_DIR}"
-              echo "BRANCH_NAME             : ${BRANCH_NAME}"
-              echo "DOCKER_REGISTRY         : ${DOCKER_REGISTRY}"
-              echo "DOCKER_REGISTRY_CREDS_ID: ${DOCKER_REGISTRY_CREDS_ID}"
-            }
-          )
-        }
-      }
-      stage('Build') {
-        when {
-          anyOf { branch 'master/*' }
-        }
-        steps {
-          buildImage()
-        }
-      }
-      stage('Push to Registry') {
-        when {
-          anyOf { branch 'master/*' }
-        }
-        steps {
-          pushImage()
-        }
+  stages {
+    stage ('Verify Tools And Print Environment Vars') {
+      steps {
+        parallel (
+          /* Verify Docker for Docker builds, docker-compose for tests and print environment variables
+          NOTE: here one should add testing tools commands (acbuild -v for rkt type builds for example) */
+          DOCKER: { sh "docker info" },
+          ENVIRONMENT: {
+            echo "IMAGE_NAME              : ${IMAGE_NAME}"
+            echo "IMAGE_VERSION           : ${IMAGE_VERSION}"
+            echo "BUILD_TYPE              : ${BUILD_TYPE}"
+            echo "BUILD_DIR               : ${BUILD_DIR}"
+            echo "BRANCH_NAME             : ${BRANCH_NAME}"
+            echo "DOCKER_REGISTRY         : ${DOCKER_REGISTRY}"
+            echo "DOCKER_REGISTRY_CREDS_ID: ${DOCKER_REGISTRY_CREDS_ID}"
+          }
+        )
       }
     }
-    post {
-      always {
-        // Cleaning Image
-        deleteImage()
-        // Cleaning Workspace (build-in function)
-        deleteDir()
+    stage('Build') {
+      when {
+        anyOf { branch 'master/*' }
       }
-      success {
-        slackSend channel: "${SLACK_CHANNEL}",
-          color: 'good',
-          message: "The pipeline ${currentBuild.fullDisplayName} completed successfully. ${BUILD_URL}"
+      steps {
+        buildImage()
       }
-      failure {
-          slackSend channel: "${SLACK_CHANNEL}",
-          color: 'danger',
-          message: "The pipeline ${currentBuild.fullDisplayName} failed. ${BUILD_URL}"
+    }
+    stage('Push to Registry') {
+      when {
+        anyOf { branch 'master/*' }
       }
-      unstable {
-          slackSend channel: "${SLACK_CHANNEL}",
-          color: 'warning',
-          message: "The pipeline ${currentBuild.fullDisplayName} is unstable. ${BUILD_URL}"
+      steps {
+        pushImage()
       }
     }
   }
+  post {
+    always {
+      // Cleaning Image
+      deleteImage()
+      // Cleaning Workspace (build-in function)
+      deleteDir()
+    }
+    success {
+      slackSend channel: "${SLACK_CHANNEL}",
+        color: 'good',
+        message: "The pipeline ${currentBuild.fullDisplayName} completed successfully. ${BUILD_URL}"
+    }
+    failure {
+        slackSend channel: "${SLACK_CHANNEL}",
+        color: 'danger',
+        message: "The pipeline ${currentBuild.fullDisplayName} failed. ${BUILD_URL}"
+    }
+    unstable {
+        slackSend channel: "${SLACK_CHANNEL}",
+        color: 'warning',
+        message: "The pipeline ${currentBuild.fullDisplayName} is unstable. ${BUILD_URL}"
+    }
+  }
+}
