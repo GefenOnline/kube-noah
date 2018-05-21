@@ -5,8 +5,24 @@
 import groovy.transform.Field
 
 // Organization name and project name
-ORG_NAME = env.JOB_NAME.tokenize('/')[0].toLowerCase()
+@Field def ORG_NAME = env.JOB_NAME.tokenize('/')[0].toLowerCase()
+@Field def PROJECT_NAME = env.JOB_NAME.tokenize('/')[1].toLowerCase()
 
+// Image name, version and the image itself once it is built
+@Field def BUILD_NAME = ORG_NAME + "/" + PROJECT_NAME
+@Field def IMAGE_VERSION = BRANCH_NAME.tokenize('/').last() + ".${BUILD_NUMBER}"
+@Field def IMAGE = ''
+
+// Build type and dir to use for the build
+@Field def BUILD_TYPE = 'docker'
+@Field def BUILD_DIR = "build/${BUILD_TYPE}"
+
+// Docker registry and credentials
+@Field def DOCKER_REGISTRY = 'https://registry.hub.docker.com'
+@Field def DOCKER_REGISTRY_CREDS_ID = '52d6d5f9-4dea-426e-b561-2d419b0f3c48'
+
+// Norifications: Slack Channel
+@Field def SLACK_CHANNEL = "#jenkins_pipelines"
 
 //Build image using the files in the build directory
 def buildImage() {
