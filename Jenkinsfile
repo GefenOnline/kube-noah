@@ -93,7 +93,7 @@ pipeline {
     }
     stage('Build') {
       when {
-        anyOf { branch 'master/*' }
+        anyOf { branch 'master' }
       }
       steps {
         buildImage()
@@ -101,7 +101,7 @@ pipeline {
     }
     stage('Push to Registry') {
       when {
-        anyOf { branch 'master/*' }
+        anyOf { branch 'master' }
       }
       steps {
         pushImage()
