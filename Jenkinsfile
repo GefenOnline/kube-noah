@@ -8,7 +8,7 @@ ORG_NAME = env.JOB_NAME.tokenize('/')[0].toLowerCase()
 PROJECT_NAME = env.JOB_NAME.tokenize('/')[1].toLowerCase()
 
 // Image name, version and the image itself once it is built
-BUILD_NAME = ORG_NAME + "/" + PROJECT_NAME
+IMAGE_NAME = ORG_NAME + "/" + PROJECT_NAME
 IMAGE_VERSION = BRANCH_NAME.tokenize('/').last() + ".${BUILD_NUMBER}"
 IMAGE = ''
 
