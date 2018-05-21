@@ -5,7 +5,7 @@
 import groovy.transform.Field
 
 // Organization name and project name
-@Field ORG_NAME = env.JOB_NAME.tokenize('/')[0].toLowerCase()
+ORG_NAME = env.JOB_NAME.tokenize('/')[0].toLowerCase()
 
 
 //Build image using the files in the build directory
