@@ -35,3 +35,6 @@ RESTORE                   | ---               | true                | Whether to
 BACKUP                    | ---               | true                | Whether to trigger 'backup from Kubernetes to Git'
 KUBE_CLUSTER_NAME         | ---               | Any name            | Although any name can be provided a unique name of the Kubernetes cluster is best appropriate for an understandable objects division and tracking
 
+----
+#### Support
+- Email: devops@gefen.online
