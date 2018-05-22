@@ -1,4 +1,5 @@
 # kube-noah
+
 [![BuildStatus Widget]][BuildStatus Result]
 
 [BuildStatus Result]: https://jenkins.onestage.xyz/view/all/job/GefenOnline/job/kube-noah/job/master/
@@ -6,6 +7,7 @@
 
 <img src="images/kube-noah.png" width="50">
 
+----
 ## What is kube-noah?
 
 kube-noah is a tool designed to backup and restore Kubernetes cluster objects: Deployments, Secrets, ConfigMaps, Ingresses, Services and more, it uses two main processes that are called on-demand when setting their appropriate environment variables:
