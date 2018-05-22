@@ -7,7 +7,7 @@
 
 <img src="images/kube-noah.png" width="50">
 
-----
+---
 ## What is kube-noah?
 
 kube-noah is a tool designed to backup and restore Kubernetes cluster objects: Deployments, Secrets, ConfigMaps, Ingresses, Services and more, it uses two main processes that are called on-demand when setting their appropriate environment variables:
@@ -37,6 +37,6 @@ RESTORE                   | ---               | true                | Whether to
 BACKUP                    | ---               | true                | Whether to trigger 'backup from Kubernetes to Git'
 KUBE_CLUSTER_NAME         | ---               | Any name            | Although any name can be provided a unique name of the Kubernetes cluster is best appropriate for an understandable objects division and tracking
 
-----
+---
 #### Support
 - Email: devops@gefen.online
