@@ -40,3 +40,6 @@ KUBE_CLUSTER_NAME         | ---               | Any name            | Although a
 ---
 #### Support
 - Email: devops@gefen.online
+- Slack: [#devops-support]
+
+[#devops-support]:https://gefenonline.slack.com/messages/devops-support
