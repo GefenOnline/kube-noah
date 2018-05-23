@@ -9,8 +9,7 @@ PROJECT_NAME = env.JOB_NAME.tokenize('/')[1].toLowerCase()
 
 // Image name, version and the image itself once it is built
 IMAGE_NAME = ORG_NAME + "/" + PROJECT_NAME
-// Example of more dynamic image version: IMAGE_VERSION = BRANCH_NAME.tokenize('/').last() + ".${BUILD_NUMBER}" 
-IMAGE_VERSION = "v2.5.0"
+IMAGE_VERSION = "v2.5.0" //Pumped manually
 IMAGE = ''
 
 // Build type and dir to use for the build
