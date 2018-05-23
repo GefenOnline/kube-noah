@@ -1,9 +1,11 @@
 # kube-noah
 
-[![BuildStatus Widget]][BuildStatus Result]
+[![BuildStatus Widget]][BuildStatus Result] [![DockerImage Widget]][DockerImage Link]
 
 [BuildStatus Result]: https://jenkins.onestage.xyz/view/all/job/GefenOnline/job/kube-noah/job/master/
 [BuildStatus Widget]: https://jenkins.onestage.xyz/buildStatus/icon?job=GefenOnline/kube-noah/master
+[DockerImage Link]: https://hub.docker.com/r/gefenonline/kube-noah/
+[DockerImage Widget]: https://img.shields.io/docker/pulls/gefenonline/kube-noah.svg
 
 <img src="images/kube-noah.png" width="50">
 
