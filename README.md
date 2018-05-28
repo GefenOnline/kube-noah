@@ -33,8 +33,8 @@ Key                       | Default value     |  Possible values    | Descriptio
 ------------------------- | ----------------- | ------------------- | ----------------
 GIT_REPO_URL              | ---               | Any https Git url   | The repository in which the objects are stored, backed up to and taken from, only https url is supported for various reasons.
 GIT_LOCAL_DIR                   | /tmp/kube-ark     | Any valid directory | The local Git repository destination inside the container (No need to change it ever)
-GIT_USER_NAME             | kube-noah service | Any username        | The username Git uses when configuring git config --global user.name
-GIT_USER_EMAIL            | kube-noah@service.com   | Any email address   | The email address Git uses when configuring git config --global user.email
+GIT_USER_NAME             | kube-noah service | Any username        | The username Git uses when configuring ```git config --global user.name```
+GIT_USER_EMAIL            | kube-noah@service.com   | Any email address   | The email address Git uses when configuring ```git config --global user.email```
 RESTORE                   | ---               | true                | Whether to trigger 'restore from Git to Kubernetes'
 BACKUP                    | ---               | true                | Whether to trigger 'backup from Kubernetes to Git'
 KUBE_CLUSTER_NAME         | ---               | Any name            | Although any name can be provided a unique name of the Kubernetes cluster is best appropriate for an understandable objects division and tracking
