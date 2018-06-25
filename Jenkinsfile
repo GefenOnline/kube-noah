@@ -18,7 +18,7 @@ BUILD_DIR = "build/${BUILD_TYPE}"
 
 // Docker registry and credentials
 DOCKER_REGISTRY = 'https://registry.hub.docker.com'
-DOCKER_REGISTRY_CREDS_ID = '52d6d5f9-4dea-426e-b561-2d419b0f3c48omer'
+DOCKER_REGISTRY_CREDS_ID = '52d6d5f9-4dea-426e-b561-2d419b0f3c47'
 
 // Norifications: Slack Channel
 SLACK_CHANNEL = "#jenkins_pipelines"
