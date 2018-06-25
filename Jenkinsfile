@@ -25,6 +25,7 @@ SLACK_CHANNEL = "#jenkins_pipelines"
 
 //Build image using the files in the build directory
 def buildImage() {
+  ansiColor('xterm') {
   echo "Building Image..."
   switch (BUILD_TYPE) {
     case "docker":
@@ -34,6 +35,7 @@ def buildImage() {
     default:
       echo "Unkown build type"
       break
+  }
   }
 }
 
