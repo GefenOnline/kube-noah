@@ -43,7 +43,7 @@ def pushImage() {
   switch (BUILD_TYPE) {
     case "docker":
       docker.withRegistry("${DOCKER_REGISTRY}", "${DOCKER_REGISTRY_CREDS_ID}") {
-        IMAGE.push("${IMAGE_VERSION}")
+        //IMAGE.push("${IMAGE_VERSION}")
         IMAGE.push("latest")
       }
       break
